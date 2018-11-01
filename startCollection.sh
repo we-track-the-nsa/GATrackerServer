@@ -1,4 +1,7 @@
 #!/bin/sh
 
-python NSATwitter.py 1>NSAoutput.log 2>NSAerror.log &
-python WHTwitter.py 1>WHoutput.log 2>WHerror.log &
+mkdir output
+mkdir error
+
+python NSATwitter.py 1>output/NSAoutput.log 2>error/NSAerror.log &
+python WHTwitter.py 1>output/WHoutput.log 2>error/WHerror.log &
