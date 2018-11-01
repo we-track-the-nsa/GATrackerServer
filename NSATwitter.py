@@ -1,3 +1,6 @@
+# import sleep so we can wait between getting more tweets
+from time import sleep
+
 # load firestore credentials
 import firebase_admin
 from firebase_admin import credentials
@@ -27,16 +30,19 @@ api = tweepy.API(auth)
 
 # get posts from twitter
 nsaPosts = api.user_timeline(screen_name = 'NSAGov', count = 100, include_rts = True)
+while(1):
+    print 'printing posts from the NSA'
+    for tweet in nsaPosts:
+        # package tweet from twitter into update format for firebase
+        update = {
+            u'source': u'twitter',
+            u'title': u'',
+            u'body': tweet.text,
+            u'time': str(tweet.created_at)
+        }
+        print update
 
-for tweet in nsaPosts:
-    # package tweet from twitter into update format for firebase
-    update = {
-        u'source': u'twitter',
-        u'title': u'',
-        u'body': tweet.text,
-        u'time': str(tweet.created_at)
-    }
-    print update
-
-    # add udpate to firestore collection
-    nsaUpdates.document(str(tweet.created_at)).set(update)
+        # add udpate to firestore collection
+        nsaUpdates.document(str(tweet.created_at)).set(update)
+    print 'sleeping.......'
+    sleep(60 * 15) # 15 min = 15 * 60 secs
