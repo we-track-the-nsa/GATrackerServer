@@ -1,5 +1,2 @@
 serviceKey.json
-NSAoutput.log
-WHoutput.log
-NSAerror.log
-WHerror.log
+*.log
