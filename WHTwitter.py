@@ -27,10 +27,9 @@ auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
  
 api = tweepy.API(auth)
-
-# get posts from twitter
-nsaPosts = api.user_timeline(screen_name = 'WhiteHouse', count = 100, include_rts = True)
 while(1):
+    # get posts from twitter
+    nsaPosts = api.user_timeline(screen_name = 'WhiteHouse', count = 100, include_rts = True)
     print 'printing posts from the White House'
     for tweet in nsaPosts:
         # package tweet from twitter into update format for firebase

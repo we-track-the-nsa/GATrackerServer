@@ -28,9 +28,9 @@ auth.set_access_token(access_token, access_secret)
  
 api = tweepy.API(auth)
 
-# get posts from twitter
-nsaPosts = api.user_timeline(screen_name = 'NSAGov', count = 100, include_rts = True)
 while(1):
+    # get posts from twitter
+    nsaPosts = api.user_timeline(screen_name = 'NSAGov', count = 100, include_rts = True)
     print 'printing posts from the NSA'
     for tweet in nsaPosts:
         # package tweet from twitter into update format for firebase
