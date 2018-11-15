@@ -22,11 +22,28 @@ nsa_rss = 'https://www.nsa.gov/DesktopModules/ArticleCS/RSS.ashx?ContentType=1&S
 # parse feed
 feed = feedparser.parse( nsa_rss )
 
+# for i in feed:
+#     print i
+
+for j in feed.entries:
+    title = j.title
+    formatedTitle = title.encode('utf-8').strip()
+
+    link = j.links[0].href
+    publish = j.published
+
+    print link
+    print formatedTitle
+    print publish
+
+    # print j.summary_detail
+    # print j
+
 # package feed into update for firestore
-update = {
-            u'source': u'twitter',
-            u'title': u'',
-            u'body': tweet.text,
-            u'time': str(tweet.created_at)
-}
+# update = {
+#             u'source': u'twitter',
+#             u'title': u'',
+#             u'body': feed.text,
+#             u'time': str(feed.created_at)
+# }
 
