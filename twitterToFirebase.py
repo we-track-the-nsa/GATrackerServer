@@ -36,6 +36,7 @@ while(1):
         # load collection
         db = firestore.client()
         col = db.collection(content + u' Updates')
+        col_all = db.collection('All Updates')
 
         # get posts from twitter
         posts = api.user_timeline(screen_name = content, count = 100, include_rts = True)
@@ -45,12 +46,22 @@ while(1):
             update = {
                 u'source': u'twitter',
                 u'title': u'',
-                u'body': tweet.text,
-                u'time': str(tweet.created_at)
+                u'body': unicode(tweet.text),
+                u'time': unicode(str(tweet.created_at))
+            }
+            update_all = {
+                u'source': u'twitter',
+                u'title': u'',
+                u'body': unicode(tweet.text),
+                u'time': unicode(str(tweet.created_at)),
+                u'agency': unicode(content)
             }
             print update
+            print update_all
 
             # add udpate to firestore collection
             col.document(str(tweet.created_at)).set(update)
+            col_all.document(str(tweet.created_at)).set(update_all)
+
     print 'sleeping.......'
     sleep(60 * 15) # 15 min = 15 * 60 secs
