@@ -40,7 +40,7 @@ while(1):
 
         # get posts from twitter
         posts = api.user_timeline(screen_name = content, count = 100, include_rts = True)
-        print 'printing and uploading posts from: ' + content
+        print 'reading and uploading posts from: ' + content
         for tweet in posts:
             # package tweet from twitter into update format for firebase
             update = {
@@ -49,19 +49,19 @@ while(1):
                 u'body': unicode(tweet.text),
                 u'time': unicode(str(tweet.created_at))
             }
-            update_all = {
-                u'source': u'twitter',
-                u'title': u'',
-                u'body': unicode(tweet.text),
-                u'time': unicode(str(tweet.created_at)),
-                u'agency': unicode(content)
-            }
-            print update
-            print update_all
-
+            # update_all = {
+            #     u'source': u'twitter',
+            #     u'title': u'',
+            #     u'body': unicode(tweet.text),
+            #     u'time': unicode(str(tweet.created_at)),
+            #     u'agency': unicode(content)
+            # }
+            # print update
+            # print update_all
+            #print tweet.created_at
             # add udpate to firestore collection
             col.document(str(tweet.created_at)).set(update)
-            col_all.document(str(tweet.created_at)).set(update_all)
+            # col_all.document(str(tweet.created_at)).set(update_all)
 
     print 'sleeping.......'
     sleep(60 * 15) # 15 min = 15 * 60 secs
