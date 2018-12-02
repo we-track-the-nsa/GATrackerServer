@@ -2,3 +2,4 @@ serviceKey.json
 output
 error
 *.log
+*.txt
