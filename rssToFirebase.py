@@ -60,6 +60,10 @@ while(1):
             agency = 'FBI'
         elif 'justice.gov' in content:
             agency = 'TheJusticeDept'
+        elif 'ice.gov' in content:
+            agency = 'ICEgov'
+        elif 'cbp.gov' in content:
+            agency = 'CBP'
         else:
             agency = 'unknown'
 
@@ -78,7 +82,7 @@ while(1):
             if agency == 'CIA' or agency == 'FBI':
                 temp = time[:10] + ' ' + time[11:19]
                 time = temp
-            elif agency == 'DeptofDefense' or agency == 'NSAGov' or agency == 'TheJusticeDept':
+            elif agency == 'DeptofDefense' or agency == 'NSAGov' or agency == 'TheJusticeDept' or agency == 'ICEgov' or agency == 'CBP':
                 monthNum = monthToNum(time[8:11])
                 temp = time[12:16] + '-' + str(monthNum).zfill(2) + '-' + time[5:7] + ' ' + time[17:25]
                 time = temp
@@ -89,19 +93,19 @@ while(1):
                 u'body': unicode(entry['summary']),
                 u'time': unicode(time)
             }
-            # update_all = {
-            #     u'source': u'website',
-            #     u'title': unicode(entry['title']),
-            #     u'body': unicode(entry['summary']),
-            #     u'time': unicode(time),
-            #     u'agency': unicode(agency)
-            # }
+            update_all = {
+                u'source': u'website',
+                u'title': unicode(entry['title']),
+                u'body': unicode(entry['summary']),
+                u'time': unicode(time),
+                u'agency': unicode(agency)
+            }
             # print agency
             # print time
             
             # add udpate to firestore collection
             col.document(time).set(update)
-            # col_all.document(entry['updated']).set(update_all)
+            col_all.document(time).set(update_all)
 
     print 'sleeping.......'
     sleep(60 * 15) # 15 min = 15 * 60 secs
